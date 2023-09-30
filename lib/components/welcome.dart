@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome(this.startGame, {super.key});
+  // this will store the address of startGame void function
   final VoidCallback startGame;
 
   @override
@@ -24,6 +25,8 @@ class Welcome extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: OutlinedButton(
+              // This will call the startGame function from the HomeScreen widget
+              // and run it there to change the widget to the Question widget
               onPressed: startGame,
               style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.orange.shade300),

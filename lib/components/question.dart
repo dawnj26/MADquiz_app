@@ -4,7 +4,6 @@ import 'package:quiz_app/data/list_questions.dart';
 class Question extends StatelessWidget {
   const Question({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return const Padding(
@@ -14,6 +13,7 @@ class Question extends StatelessWidget {
   }
 }
 
+// Contents inside the Padding Widget
 class Content extends StatefulWidget {
   const Content({
     super.key,
@@ -27,9 +27,12 @@ class _ContentState extends State<Content> {
   var i = 0;
   var score = 0;
   var isFinished = false;
+
+  // List of data
   final question = QUESTIONS;
   final answers = ANSWERS;
   
+  // Reset the game variables
   void restartGame() {
     setState(() {
       isFinished = false;
@@ -37,18 +40,24 @@ class _ContentState extends State<Content> {
       score = 0;
     });
   }
+
   void answer(bool n) {
     setState(() {
+      // Check if the answer is correct
       if (n == answers[i]) score++;
+      
+      // Change isFinished to true to display score widget
       if(i == question.length - 1) {
         isFinished = true;
         return;
       }
       i++;
     });
+
   }
   @override
   Widget build(BuildContext context) {
+                              // Pass the address of restartGame function
     return isFinished ? Score(score, restartGame) : Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -88,9 +97,11 @@ class _ContentState extends State<Content> {
 
 
 class Score extends StatelessWidget {
-  const Score(this.totalScore,this.restart, {super.key});
+  // Store the total score and the address of restart function
+  const Score(this.totalScore, this.restart, {super.key});
   final int totalScore;
   final VoidCallback restart;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -110,7 +121,12 @@ class Score extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        ElevatedButton(onPressed: restart, child: const Text('Play again'))
+        ElevatedButton(
+          // this will Call the restart function from the Contents 
+          // widget and it will run there to restart the game
+          onPressed: restart,
+          child: const Text('Play again')
+          )
       ],
     );
   }
