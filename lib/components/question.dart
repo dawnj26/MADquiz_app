@@ -31,7 +31,7 @@ class _ContentState extends State<Content> {
   // List of data
   final question = QUESTIONS;
   final answers = ANSWERS;
-  
+
   // Reset the game variables
   void restartGame() {
     setState(() {
@@ -45,60 +45,80 @@ class _ContentState extends State<Content> {
     setState(() {
       // Check if the answer is correct
       if (n == answers[i]) score++;
-      
-      // Change isFinished to true to display score widget
-      if(i == question.length - 1) {
+
+      // After answering all questions change isFinished to true
+      // to move to Score widget
+      if (i == question.length - 1) {
         isFinished = true;
         return;
       }
       i++;
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
-                              // Pass the address of restartGame function
-    return isFinished ? Score(score, restartGame) : Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const Text(
-          'Question 1',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        Text(
-          question[i],
-          style: const TextStyle(
-            fontSize: 24,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 24,),
-        Row(
-          children: [
-            Expanded(child: ElevatedButton(onPressed: () => answer(true),style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.orange.shade300), child: const Text('True', style: TextStyle(color: Colors.black),)),),
-            const SizedBox(
-              width: 16,
-            ),
-            Expanded(child: ElevatedButton(onPressed: () => answer(false),style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.orange.shade300), child: const Text('False', style: TextStyle(color: Colors.black),))),
-          ],
-        ),
-
-      ],
-    );
+    // Check if the game isFinished, if it is finished then call the
+    // Score widget and pass the score and restart function
+    return isFinished
+        ? Score(score, restartGame)
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Question 1',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Text(
+                question[i],
+                style: const TextStyle(
+                  fontSize: 24,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () => answer(true),
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.orange.shade300),
+                        child: const Text(
+                          'True',
+                          style: TextStyle(color: Colors.black),
+                        )),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                          onPressed: () => answer(false),
+                          style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.orange.shade300),
+                          child: const Text(
+                            'False',
+                            style: TextStyle(color: Colors.black),
+                          ))),
+                ],
+              ),
+            ],
+          );
   }
 }
-
 
 class Score extends StatelessWidget {
   // Store the total score and the address of restart function
   const Score(this.totalScore, this.restart, {super.key});
+
   final int totalScore;
   final VoidCallback restart;
 
@@ -108,25 +128,32 @@ class Score extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Score:', textAlign: TextAlign.center, style: TextStyle(
-          fontSize: 40,
-        ),),
+        const Text(
+          'Score:',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 40,
+          ),
+        ),
         const SizedBox(
           height: 16,
         ),
-        Text('$totalScore / 3', textAlign: TextAlign.center, style: const TextStyle(
-          fontSize: 40,
-          fontWeight: FontWeight.w600,
-        ),),
+        Text(
+          '$totalScore / 3',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         const SizedBox(
           height: 16,
         ),
         ElevatedButton(
-          // this will Call the restart function from the Contents 
-          // widget and it will run there to restart the game
-          onPressed: restart,
-          child: const Text('Play again')
-          )
+            // this will Call the restart function from the Contents
+            // widget and it will run there to restart the game
+            onPressed: restart,
+            child: const Text('Play again'))
       ],
     );
   }

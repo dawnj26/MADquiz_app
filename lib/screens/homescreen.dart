@@ -26,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Quiz App'),
         backgroundColor: Colors.red.shade300,
       ),
-                                            // Pass the address of startGame function
+      // Check if Play button is pressed, if pressed then
+      // go to Question widget
       body: isPlay ? const Question() : Welcome(startGame),
     );
   }
